@@ -6,7 +6,7 @@ import logging
 
 class PubSubBus(object):
     """
-    In-memory Publish/Subscribe message. This bus allows zero or more
+    In-memory Publish/Subscribe message bus. This bus allows zero or more
     publishers (producers of messages) to communicate with zero or more
     subscribers (consumers of messages) over a channel (a topic). The
     publishers have nor need to have knowledge of where or how many subscribers
@@ -82,7 +82,8 @@ class PubSubBus(object):
     def subscribe(self, topic_name, data_callback):
         """
         Addes a subscriber's callback to be called when data is published to
-        the given topic.
+        the given topic. It is not an error for the same callback to be added
+        multiple times as it will only be called once regardless.
 
         Args:
             topic_name (str): Topic name to which to subscribe

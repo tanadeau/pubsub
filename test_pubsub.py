@@ -168,12 +168,12 @@ class PubSubTest(unittest.TestCase):
         foo_sub = SingleSubscriber(self, bus, 'foo', 'data')
         self.assertRaises(TypeError, foo_sub.sub_cb_invalid)
 
-        # Create second sub to take bus will not be broken
+        # Create second sub to check bus will not be broken
         foo_sub2 = SingleSubscriber(self, bus, 'foo', 'data')
         foo_sub2.subscribe_good()
 
         # Ensure that invalid callbacks (invalid signatures) do not get called
-        # and do not fail the bus for other subscribers
+        # and do not break the bus for other subscribers
         foo_sub.subscribe_incorrect_sig()
         bus.publish('foo', 'data')
         self.assertEquals(foo_sub2.num_cb, 1)
@@ -199,7 +199,8 @@ class PubSubTest(unittest.TestCase):
         # Subscribe to all topics
         multi_sub.subscribe_topics()
 
-        # Publish several times in various combos of topics and verify counts
+        # Publish several times in various combos of topics and then verify
+        # counts
 
         for (topic, data) in topic_data_dict.iteritems():
             bus.publish(topic, data)
